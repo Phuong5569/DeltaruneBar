@@ -54,7 +54,7 @@ int main(int argc, char* argv[]){
     int index = 0;
     while (true){
         
-        string media = get_media_name("~/.config/eww/scripts/spotify_status.sh");
+        string media = get_media_name("~/.config/eww/scripts/media/spotify_status.sh");
         media.pop_back();
         media += " [/] ";
         if (media != old_media){

@@ -1,33 +1,46 @@
-; (defpoll time :interval "1s" "date +'%H:%M:%S'")
-; (deflisten spotify_scroller
-;   "sh ~/.config/eww/scripts/scroll_spotify.sh")
+(defpoll time :interval "1s" "date +'%H:%M:%S'")
+(deflisten spotify_scroller
+  "sh ~/.config/eww/scripts/media/scroll_spotify.sh")
 
 
 
 ;wifi, eth and battery 
 
-(defvar eth false)
-(defvar battery 99)
-(defvar ischarging true)
-(defvar wifi-revealed true)
+; (defvar eth false)
+; (defvar battery 99)
+
+; (defvar ischarging true) ;placeholder for debug
+
+
+
+
+(defvar wifi-revealed false)
+
+(defpoll eth :interval "1s" 
+"sh ~/.config/eww/scripts/network/ethernet_status.sh")
+(defpoll battery :interval "20s" "cat /sys/class/power_supply/BAT0/capacity")
+(defpoll ischarging :interval "2s" "cat /sys/class/power_supply/BAT0/status") 
 
 ; -----------------
 
-; essensial
-(defvar _cpu 90)
-(defvar _gpu 50)
-(defvar _ram 10)
+; essensial - placeholder
+; (defvar _cpu 90)
+; (defvar _gpu 50)
+; (defvar _ram 10)
 (defvar essensial-revealed false)
 (defvar essensial-icon "/home/phuong5569/.config/eww/resources/act.png")
 ; -----------------
+(defvar intervalEssensial "1s")
 
-
+(defpoll _cpu :interval "5s" "sh ~/.config/eww/scripts/essensial/cpu-usage.sh")
+(defpoll _gpu :interval "5s" "sh ~/.config/eww/scripts/essensial/gpu-usage-nvida.sh")
+(defpoll _ram :interval "5s" "sh ~/.config/eww/scripts/essensial/ram-usage.sh")
   
-(defvar  spotify_scroller "fuck")
+; (defvar  spotify_scroller "fuck")
 
 
 ; middle
-(defvar time 10)
+; (defvar time 10)
 ; -----------------
 
 ; (defpoll _vol :interval "1s"
@@ -83,7 +96,7 @@
 (box  :class "eth"
       :orientation "horizontal"
       :halign "center"
-    (button   :onclick "sh ~/.config/eww/scripts/copy-eth-ip.sh"
+    (button   :onclick "sh ~/.config/eww/scripts/network/copy-eth-ip.sh"
               :class {eth ? "eth_connected" : "eth_disconnected"}
               :active eth
              {eth ? "ETH":"eth"})))
@@ -113,7 +126,7 @@
       :width 10
       :style "padding-right: 10px;" 
     (label 
-      :class "battery ${ischarging?'active': 'inactive'}"
+      :class "battery ${ischarging}"
       :text {battery == 100 ? "FULL" : battery}
       :style {battery == 100 ? "color: #ffff00;":""})))
 

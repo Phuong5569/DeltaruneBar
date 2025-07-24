@@ -7,7 +7,7 @@ done
 
 # Check if the interface is up
 if [[ "$(cat /sys/class/net/$iface/operstate)" == "up" ]]; then
-  echo 1   # true
+  echo true   # true
 else
-  echo 0   # false
+  echo false   # false
 fi
