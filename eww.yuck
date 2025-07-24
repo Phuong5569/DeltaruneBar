@@ -18,7 +18,7 @@
 (defvar _gpu 50)
 (defvar _ram 10)
 (defvar essensial-revealed false)
-(defvar essensial-icon "/home/phuong5569/.config/eww/resources/act.png")
+(defvar essensial-icon "$HOME/.config/eww/resources/act.png")
 ; -----------------
 
 
@@ -38,7 +38,7 @@
 ;is volume time
 (defvar _vol 1)
 (defvar vol-revealed false)
-(defvar vol-icon "/home/phuong5569/.config/eww/resources/attack.png")
+(defvar vol-icon "$HOME/.config/eww/resources/attack.png")
 
 (defwidget volume []
   (revealer
@@ -49,19 +49,19 @@
     :orientation "horizontal" :style "background: #000000; border: 1px solid #ffffff;"
     (box :orientation "h"
       (box :orientation "v" :space-evenly false :spacing 1 :style "padding-left: 5px"
-            (image :path "/home/phuong5569/.config/eww/resources/tp-overlay.png" :style "padding-top: 30px;") (label :text _vol :style "font-size: 24px; min-width: 48px; margin-right:-10px")(label :style "font-size: 33px;" :text "%"))
+            (image :path "$HOME/.config/eww/resources/tp-overlay.png" :style "padding-top: 30px;") (label :text _vol :style "font-size: 24px; min-width: 48px; margin-right:-10px")(label :style "font-size: 33px;" :text "%"))
       (overlay 
-        (image :path "/home/phuong5569/.config/eww/resources/vol-overlay.png")
+        (image :path "$HOME/.config/eww/resources/vol-overlay.png")
         (progress :class "VolumeBar" :value _vol :valign "end" :orientation "v" :flipped true)
-      (image :path "/home/phuong5569/.config/eww/resources/vol-overlay.png" :style "padding-left: 10px")
+      (image :path "$HOME/.config/eww/resources/vol-overlay.png" :style "padding-left: 10px")
       ))))
     )
 
 (defwidget volume-wraper []
   (eventbox
     :onscroll "~/.config/eww/scripts/volume/update_volume.sh {}"
-    :onhover "eww update vol-revealed=true && eww update vol-icon='/home/phuong5569/.config/eww/resources/attack-active.png'"
-    :onhoverlost "eww update vol-revealed=false && eww update vol-icon='/home/phuong5569/.config/eww/resources/attack.png'"
+    :onhover "eww update vol-revealed=true && eww update vol-icon='$HOME/.config/eww/resources/attack-active.png'"
+    :onhoverlost "eww update vol-revealed=false && eww update vol-icon='$HOME/.config/eww/resources/attack.png'"
     (box
       :orientation "horizontal"
       :class "vol-wraper"
@@ -98,7 +98,7 @@
     :onclick {wifi-revealed ?"eww update wifi-revealed=false" : "eww update wifi-revealed=true"}
   (box
   :orientation "horizontal"
-(image :path {wifi-revealed ?"/home/phuong5569/.config/eww/resources/item-active.png" : "/home/phuong5569/.config/eww/resources/item.png"}))))
+(image :path {wifi-revealed ?"$HOME/.config/eww/resources/item-active.png" : "$HOME/.config/eww/resources/item.png"}))))
 
 
 
@@ -191,7 +191,7 @@
 (defwidget cpu []
   (box  :class "cpu-widget"
         :space-evenly false
-  (image :path "/home/phuong5569/.config/eww/resources/kris.png")
+  (image :path "$HOME/.config/eww/resources/kris.png")
   "KRIS"
     (box  :space-evenly false
           :orientation "vertical"
@@ -216,7 +216,7 @@
 (defwidget gpu []
   (box  :class "gpu-widget"
         :space-evenly false
-  (image :path "/home/phuong5569/.config/eww/resources/susie.png")
+  (image :path "$HOME/.config/eww/resources/susie.png")
   "SUSIE"
     (box  :space-evenly false
           :orientation "vertical"
@@ -239,7 +239,7 @@
   
   (box  :class "ram-widget"
         :space-evenly false
-  (image :path "/home/phuong5569/.config/eww/resources/ralsei.png")
+  (image :path "$HOME/.config/eww/resources/ralsei.png")
   "RALSEI"
     (box  :space-evenly false
           :orientation "vertical"
@@ -269,8 +269,8 @@
 
 (defwidget essensial-wraper []
   (eventbox
-    :onhover "eww update essensial-revealed=true && eww update essensial-icon='/home/phuong5569/.config/eww/resources/act_active.png'"
-    :onhoverlost "eww update essensial-revealed=false && eww update essensial-icon='/home/phuong5569/.config/eww/resources/act.png'"
+    :onhover "eww update essensial-revealed=true && eww update essensial-icon='$HOME/.config/eww/resources/act_active.png'"
+    :onhoverlost "eww update essensial-revealed=false && eww update essensial-icon='$HOME/.config/eww/resources/act.png'"
     (box
       :orientation "horizontal"
       :class "essensial-wraper"
