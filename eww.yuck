@@ -82,6 +82,8 @@
 
 
 
+
+
 (defwindow volume-bar
   :monitor 0
   :geometry (geometry :x "10%" :y "0%" :anchor "top right")
@@ -150,8 +152,8 @@
 (defwidget widgets-right []
   (box
     :space-evenly false
-    :spacing 20
-    (volume-wraper)(essensial-wraper)(network_battery)))
+    :spacing 10
+    (volume-wraper)(essensial-wraper)(bluetooth-wraper)(network_battery)))
 
 (defwidget clock []
   (box :class "clock-widget"
@@ -372,8 +374,20 @@
           (label :class "wifi-security" :text { network.security != "None" ? "[*]" : "" } :halign "center")
           (label :class "wifi-status" :text "${network.connected ? '♥' : ' '}" :justify "right" :style "color:red")))))))
 
+;----- bluetooth widget
 
+(defvar bluetooth-icon "/home/phuong5569/.config/eww/resources/spare.png")
 
+(defwidget bluetooth-wraper []
+  (eventbox
+    :onhover "eww update bluetooth-icon='/home/phuong5569/.config/eww/resources/spare-active.png'"
+    :onhoverlost "eww update bluetooth-icon='/home/phuong5569/.config/eww/resources/spare.png'"
+    :onclick "blueman-manager &"
+    (box
+      :orientation "horizontal"
+      :class "bluetooth-wraper"
+    (image
+      :path bluetooth-icon))))
 
 
 
