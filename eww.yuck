@@ -30,11 +30,10 @@
 (defvar essensial-revealed false)
 (defvar essensial-icon "/home/phuong5569/.config/eww/resources/act.png")
 ; -----------------
-(defvar intervalEssensial "1s")
 
-(defpoll _cpu :interval "5s" "sh ~/.config/eww/scripts/essensial/cpu-usage.sh")
-(defpoll _gpu :interval "5s" "sh ~/.config/eww/scripts/essensial/gpu-usage-nvida.sh")
-(defpoll _ram :interval "5s" "sh ~/.config/eww/scripts/essensial/ram-usage.sh")
+(defpoll _cpu :interval "2s" "sh ~/.config/eww/scripts/essensial/cpu-usage.sh")
+(defpoll _gpu :interval "2s" "sh ~/.config/eww/scripts/essensial/gpu-usage-nvida.sh")
+(defpoll _ram :interval "2s" "sh ~/.config/eww/scripts/essensial/ram-usage.sh")
   
 ; (defvar  spotify_scroller "fuck")
 
