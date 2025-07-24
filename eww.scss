@@ -1,0 +1,216 @@
+$background: #000000;
+$whitetxt: #ffffff;
+$kris: #00ffe5;
+$ralsei: #00ff80;
+$susie: #ee00ff;
+$heart: #ff0015;
+$disabled: #333333;
+$hp: #610009;
+$star: #ffff00;
+
+
+
+.main-bar{
+    border: 2px solid $whitetxt;
+    background-color: $background;
+    // padding-topk: 10px;
+    // padding-bottom: 10px;
+}
+
+* {
+    font-family: 'Determination Mono';
+    font-size: 16px;
+}
+
+.essensial{
+    border: 1px solid $whitetxt;
+    background-color: $background;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    
+
+}
+
+.cpu-bar, .gpu-bar, .ram-bar {
+    background-color:$background;
+    font-size: 16px;
+    
+}
+
+
+.gpu-bar progress {
+    background-color: $susie;
+}
+.ram-bar progress {
+    background-color: $ralsei;
+}
+
+.percentage {
+    font-size: 14px;
+}
+
+.cpu-bar > trough {
+    min-width: 100px;
+    min-height: 12px;
+    background-color: $hp;
+    
+}
+
+.gpu-bar > trough {
+    min-width: 100px;
+    min-height: 12px;
+    background-color: $hp;
+    
+}
+
+.ram-bar > trough {
+    min-width: 100px;
+    min-height: 12px;
+    background-color: $hp;
+    
+}
+
+* progress {
+    min-height: 12px;
+}
+
+
+.cpu-bar progress {
+    background-color: $kris;
+}
+
+
+.eth_connected {
+  color: $star; 
+  background: transparent;
+  border: none;
+}
+
+.eth_connected:hover {
+  opacity: 0.8;
+}
+
+.eth_disconnected {
+  color: $disabled; 
+  background: transparent;
+  border: none;
+  opacity: 0.6;
+}
+
+button:disabled {
+  opacity: 0.5;
+}
+.indicate {
+    font-size: 10px;
+}
+
+
+
+.essensial.hidden {
+  opacity: 0;
+  margin-top: -50px;
+}
+
+.essensial.visible {
+  opacity: 1;
+  margin-top: 0px;
+}
+
+
+.workspaces {
+  padding: 5px;
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.workspace {  
+  border: none;
+  font-weight: bold;
+  transition: all 200ms ease;
+  background: transparent;
+  color: $whitetxt;
+}
+
+.workspace.active {
+  background: $heart;
+  color: $whitetxt;
+}
+
+.workspace.inactive:hover {
+  background: $susie;
+  color: $whitetxt;
+}
+
+.workspace.occupied {
+  background: $disabled;
+  color: $whitetxt;
+}
+
+.workspace.empty {
+  background: transparent;
+  color: $disabled;
+}
+
+.battery.active {
+  color:$ralsei
+}
+
+
+// wifi part 
+
+.wifi-container *{
+    // border: 1px solid $whitetxt;
+    background-color: $background;
+}
+.wifi-button {
+  background: $background;
+  border-radius: 0;
+
+}
+
+.wifi-button:hover* {
+  background-color: $star;
+  color: #333333;
+  border-radius: 0;
+}
+
+.wifi-refresh{
+  background: $background;
+  background-color: $disabled;
+}
+.wifi-window {
+  background: $background;
+}
+.wifi-wraper{
+  border: 2px solid $whitetxt;
+  background: $background;
+}
+.wifi-refresh {
+  border-radius: 0;
+}
+.wifi-disconnect{
+  border-radius: 0;
+}
+
+.wifi-refresh:hover {
+  background-color: $star;
+  color: #333333;
+}
+.wifi-disconnect:hover{
+  background-color: $heart; 
+  color: #333333;
+}
+
+// Volume
+
+.VolumeBar > trough {
+  margin-right:5px ;
+  min-width: 20px;
+  min-height: 190px;
+  background: $hp;
+}
+.VolumeBar progress {
+  min-width: 20px;
+  background-color: #f18f44;
+}

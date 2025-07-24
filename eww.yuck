@@ -1,0 +1,368 @@
+; (defpoll time :interval "1s" "date +'%H:%M:%S'")
+; (deflisten spotify_scroller
+;   "sh ~/.config/eww/scripts/scroll_spotify.sh")
+
+
+
+;wifi, eth and battery 
+
+(defvar eth false)
+(defvar battery 99)
+(defvar ischarging true)
+(defvar wifi-revealed true)
+
+; -----------------
+
+; essensial
+(defvar _cpu 90)
+(defvar _gpu 50)
+(defvar _ram 10)
+(defvar essensial-revealed false)
+(defvar essensial-icon "/home/phuong5569/.config/eww/resources/act.png")
+; -----------------
+
+
+  
+(defvar  spotify_scroller "fuck")
+
+
+; middle
+(defvar time 10)
+; -----------------
+
+; (defpoll _vol :interval "1s"
+;    "pactl get-sink-volume @DEFAULT_SINK@ | grep -oP '\\d+%' | head -1 | tr -d '%'")
+
+
+;----------------
+;is volume time
+(defvar _vol 1)
+(defvar vol-revealed false)
+(defvar vol-icon "/home/phuong5569/.config/eww/resources/attack.png")
+
+(defwidget volume []
+  (revealer
+      :reveal vol-revealed 
+      :transition "slidedown"
+      :duration "200ms"
+    (box 
+    :orientation "horizontal" :style "background: #000000; border: 1px solid #ffffff;"
+    (box :orientation "h"
+      (box :orientation "v" :space-evenly false :spacing 1 :style "padding-left: 5px"
+            (image :path "/home/phuong5569/.config/eww/resources/tp-overlay.png" :style "padding-top: 30px;") (label :text _vol :style "font-size: 24px; min-width: 48px; margin-right:-10px")(label :style "font-size: 33px;" :text "%"))
+      (overlay 
+        (image :path "/home/phuong5569/.config/eww/resources/vol-overlay.png")
+        (progress :class "VolumeBar" :value _vol :valign "end" :orientation "v" :flipped true)
+      (image :path "/home/phuong5569/.config/eww/resources/vol-overlay.png" :style "padding-left: 10px")
+      ))))
+    )
+
+(defwidget volume-wraper []
+  (eventbox
+    :onscroll "~/.config/eww/scripts/volume/update_volume.sh {}"
+    :onhover "eww update vol-revealed=true && eww update vol-icon='/home/phuong5569/.config/eww/resources/attack-active.png'"
+    :onhoverlost "eww update vol-revealed=false && eww update vol-icon='/home/phuong5569/.config/eww/resources/attack.png'"
+    (box
+      :orientation "horizontal"
+      :class "vol-wraper"
+    (image
+      :path vol-icon))))
+
+
+
+(defwindow volume-bar
+  :monitor 0
+  :geometry (geometry :x "10%" :y "0%" :anchor "top right")
+  :stacking "fg"
+  :exclusive false
+  :windowtype "normal"
+  :wm-ignore false
+(volume))
+
+(defwidget eth_status []
+(box  :class "eth"
+      :orientation "horizontal"
+      :halign "center"
+    (button   :onclick "sh ~/.config/eww/scripts/copy-eth-ip.sh"
+              :class {eth ? "eth_connected" : "eth_disconnected"}
+              :active eth
+             {eth ? "ETH":"eth"})))
+
+
+
+
+
+(defwidget wifi-menu-toggle []
+(eventbox
+    :class "item"
+    :onclick {wifi-revealed ?"eww update wifi-revealed=false" : "eww update wifi-revealed=true"}
+  (box
+  :orientation "horizontal"
+(image :path {wifi-revealed ?"/home/phuong5569/.config/eww/resources/item-active.png" : "/home/phuong5569/.config/eww/resources/item.png"}))))
+
+
+
+
+
+
+
+(defwidget battery []
+(box  
+      :orientation "horizontal"
+      :halign "center"
+      :width 10
+      :style "padding-right: 10px;" 
+    (label 
+      :class "battery ${ischarging?'active': 'inactive'}"
+      :text {battery == 100 ? "FULL" : battery}
+      :style {battery == 100 ? "color: #ffff00;":""})))
+
+
+
+
+
+(defwidget spotify-widget []
+  (box :class "spotify-scroller"
+    (label :text spotify_scroller
+           :class "spotify-label")))
+
+
+(defwidget widgets-left []
+  (box
+    :space-evenly false
+  (workspaces)(spotify-widget)))
+
+(defwidget widgets-mid []
+  (clock))
+
+(defwidget widgets-right []
+  (box
+    :space-evenly false
+    :spacing 20
+    (volume-wraper)(essensial-wraper)(network_battery)))
+
+(defwidget clock []
+  (box :class "clock-widget"
+       :orientation "vertical"
+    (label :class "time" :text time)))
+
+
+
+
+(defwidget bar []
+  (centerbox :class "main-bar"
+             :orientation "horizontal"
+    (box :class "left-section"
+         :orientation "horizontal"
+         :halign "start"
+      (widgets-left))
+    
+    (box :class "center-section"
+         :orientation "horizontal"
+         :halign "center"
+      (widgets-mid))
+    
+    (box :class "right-section"
+         :orientation "horizontal"
+         :spacing 15
+         :halign "end"
+      (widgets-right))))
+
+(defwindow bar
+  :monitor 0
+  :geometry (geometry :x "0%" :y "0%" :width "100%" :height "30px" :anchor "top center")
+  :stacking "fg"
+  :exclusive true
+  :windowtype "dock"
+  :wm-ignore false
+  (bar))
+
+
+
+(defwidget network_battery []
+  (box  :class "network_battery"
+        :space-evenly false
+        :spacing 15
+      (wifi-menu-toggle)(eth_status)(battery)))
+
+
+
+
+(defwidget cpu []
+  (box  :class "cpu-widget"
+        :space-evenly false
+  (image :path "/home/phuong5569/.config/eww/resources/kris.png")
+  "KRIS"
+    (box  :space-evenly false
+          :orientation "vertical"
+  (label  :class "percentage"
+          :text "${_cpu}${_cpu < 10 ? '  ' : _cpu < 100 ? ' ' : ''}/  100"
+          :xalign "1")
+         (box 
+              :orientation "horizontal"
+              :space-evenly false
+            (label  :class "indicate"
+                    :text "cpu")    
+            (progress :value _cpu
+              :class "cpu-bar"
+              :valign "center"
+              )
+            )
+    )
+  )
+)
+
+
+(defwidget gpu []
+  (box  :class "gpu-widget"
+        :space-evenly false
+  (image :path "/home/phuong5569/.config/eww/resources/susie.png")
+  "SUSIE"
+    (box  :space-evenly false
+          :orientation "vertical"
+  (label  :class "percentage"
+          :text "${_gpu}${_gpu < 10 ? '  ' : _gpu < 100 ? ' ' : ''}/  100"
+          :xalign "1")
+         (box 
+              :orientation "horizontal"
+              :space-evenly false
+            (label  :class "indicate"
+                    :text "gpu")    
+            (progress :value _gpu
+              :class "gpu-bar"
+              :valign "center"
+              )
+            ))))
+
+
+(defwidget ram []
+  
+  (box  :class "ram-widget"
+        :space-evenly false
+  (image :path "/home/phuong5569/.config/eww/resources/ralsei.png")
+  "RALSEI"
+    (box  :space-evenly false
+          :orientation "vertical"
+  (label  :class "percentage"
+          :text "${_ram}${_ram < 10 ? '  ' : _ram < 100 ? ' ' : ''}/  100"
+          :xalign "1")
+         (box 
+              :orientation "horizontal"
+              :space-evenly false
+            (label  :class "indicate"
+                    :text "ram")    
+            (progress :value _ram
+              :class "ram-bar"
+              :valign "center"
+              )
+            ))))
+
+(defwindow essensial-bar
+  :monitor 0
+  :geometry (geometry :x "0%" :y "0%" :anchor "top right")
+  :stacking "overlay"
+  :exclusive false  
+  :windowtype "normal"  
+  :wm-ignore false
+    (essensial))
+
+
+(defwidget essensial-wraper []
+  (eventbox
+    :onhover "eww update essensial-revealed=true && eww update essensial-icon='/home/phuong5569/.config/eww/resources/act_active.png'"
+    :onhoverlost "eww update essensial-revealed=false && eww update essensial-icon='/home/phuong5569/.config/eww/resources/act.png'"
+    (box
+      :orientation "horizontal"
+      :class "essensial-wraper"
+    (image
+      :path essensial-icon))))
+
+(defwidget essensial []
+  (revealer
+    :transition "slidedown"
+    :reveal essensial-revealed
+    :duration "100ms"
+  (box :class "essensial"
+       :space-evenly false
+       :spacing 20
+    (cpu)(gpu)(ram))))
+
+
+
+;; Variables for workspace state
+(defvar current-workspace 1)
+(defvar workspaces "[1,2,3,4,5]")
+
+;; Workspace widget - main component
+(defwidget workspaces []
+  (box :class "workspaces"
+       :space-evenly true
+       :spacing 0
+    (for workspace in workspaces
+      (workspace-button :id workspace))))
+
+(defwidget workspace-button [id]
+  (button 
+    :class "workspace ${id == current-workspace ? 'active' : 'inactive'}"
+    :onclick "hyprctl dispatch workspace ${id} && eww update current-workspace=${id}"
+    :tooltip "Workspace ${id}"
+    "${id}"))
+
+(defvar isRefresh "Refresh") 
+
+(defwindow wifi-bar
+  :monitor 0
+  :geometry (geometry :x "0" :y "0" :anchor "top right"  )
+  :stacking "fg"
+  :layer "top"
+  :exclusive false
+  :windowtype "normal"
+  :wm-ignore false
+  
+  (box :class "wifi-wraper"
+       :visible wifi-revealed
+    (revealer
+      :reveal winrev
+      :style "padding: 5px; background: transparent;"
+      :reveal wifi-revealed
+      :transition "slidedown"
+      :duration "100ms"
+      (box :class "wifi-window" :orientation "vertical" :space-evenly false
+        (wifi-list)
+        (box :orientation "horizontal" :space-evenly true 
+          (button
+            :class "wifi-refresh"
+            :onclick "eww update isRefresh='scanning....' && ~/.config/eww/scripts/network/scan-wifi.sh && eww update isRefresh='Refresh' &"
+            isRefresh)
+          (button
+            :class "wifi-disconnect"
+            :onclick "nmcli device disconnect wlo1 && ~/.config/eww/scripts/network/scan-wifi.sh &"
+            "Disconnect"))))))
+
+
+(defvar wifi-networks "[{\"ssid\":\"Network_1\",\"signal\":89,\"security\":\"WPA2\",\"connected\":false},{\"ssid\":\"Network_2\",\"signal\":75,\"security\":\"WPA2\",\"connected\":false},{\"ssid\":\"Network_3\",\"signal\":60,\"security\":\"WPA2\",\"connected\":false},{\"ssid\":\"Network_4\",\"signal\":94,\"security\":\"WPA2\",\"connected\":true},{\"ssid\":\"Network_5\",\"signal\":55,\"security\":\"WPA\",\"connected\":false},{\"ssid\":\"Network_6\",\"signal\":48,\"security\":\"WPA\",\"connected\":false},{\"ssid\":\"Network_7\",\"signal\":80,\"security\":\"WPA2\",\"connected\":false},{\"ssid\":\"Network_8\",\"signal\":70,\"security\":\"WPA2\",\"connected\":false},{\"ssid\":\"Network_9\",\"signal\":30,\"security\":\"WPA2\",\"connected\":false},{\"ssid\":\"Network_10\",\"signal\":45,\"security\":\"WEP\",\"connected\":false},{\"ssid\":\"Network_11\",\"signal\":91,\"security\":\"WPA2\",\"connected\":false},{\"ssid\":\"Network_12\",\"signal\":76,\"security\":\"WPA2\",\"connected\":false},{\"ssid\":\"Network_13\",\"signal\":33,\"security\":\"None\",\"connected\":false},{\"ssid\":\"Network_14\",\"signal\":66,\"security\":\"WPA2\",\"connected\":false},{\"ssid\":\"Network_15\",\"signal\":83,\"security\":\"WPA3\",\"connected\":false},{\"ssid\":\"Network_16\",\"signal\":25,\"security\":\"WPA\",\"connected\":false},{\"ssid\":\"Network_17\",\"signal\":58,\"security\":\"WPA2\",\"connected\":false},{\"ssid\":\"Network_18\",\"signal\":69,\"security\":\"WPA2\",\"connected\":false},{\"ssid\":\"Network_19\",\"signal\":88,\"security\":\"WPA2\",\"connected\":false},{\"ssid\":\"Network_20\",\"signal\":99,\"security\":\"WPA2\",\"connected\":false}]")
+;bacsically I need to push a fake data for the windows render the requirement space, then hit refesh for data updated, look dumb as fuck but hey its worked like a charm lol
+
+
+
+
+
+(defwidget wifi-list []
+  (box :class "wifi-container" :orientation "v" :space-evenly false
+    (for network in wifi-networks
+      (button
+        :class "wifi-button"
+        :onclick "sh ~/.config/eww/scripts/network/connect-wifi.sh '${network.ssid}' '${network.security}' && ~/.config/eww/scripts/network/scan-wifi.sh && cat ~/.config/eww/scripts/network/list-wifi.json > /tmp/eww-wifi-update &"
+      (box :class "wifi-item ${network.connected ? 'connected' : ''}" :orientation "h" :space-evenly true :spacing 0
+        (label :class "wifi-ssid" :text "${network.ssid}")
+        (box :class "wifi-info" :orientation "h" :space-evenly true 
+          (label :class "wifi-signal" :text "${network.signal}%")
+          (label :class "wifi-security" :text { network.security != "None" ? "[*]" : "" } :halign "center")
+          (label :class "wifi-status" :text "${network.connected ? '♥' : ' '}" :justify "right" :style "color:red")))))))
+
+
+
+
+
+
+

@@ -1,0 +1,3 @@
+hyprctl activewindow -j | jq -r '.workspace.id' | while read workspace; do
+   eww update current-workspace="$workspace"
+done

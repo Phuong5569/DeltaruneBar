@@ -1,0 +1,19 @@
+network_battery :
+    wf  eth battery 
+-No even
+
+ essensial :
+    (kris : cpu) (Susie : gpu ) (Ralsei : ram)
+-Evenly
+
+right-stuff
+     (vol)(essensial) (space) (network_battery)
+-no even
+
+middle 
+    (time)
+
+lef-stuff
+    (worksapce [constain width]) (space) (Spotify) (space) (status)
+-Evenly
+
