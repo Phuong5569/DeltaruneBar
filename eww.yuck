@@ -14,7 +14,7 @@
 
 
 
-(defvar wifi-revealed false)
+(defvar wifi-revealed true)
 
 (defpoll eth :interval "1s" 
 "sh ~/.config/eww/scripts/network/ethernet_status.sh")
