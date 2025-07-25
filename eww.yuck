@@ -7,7 +7,7 @@
 ;wifi, eth and battery 
 
 ; (defvar eth false)
-; (defvar battery 99)
+; (defvar battery 100)
 
 ; (defvar ischarging true) ;placeholder for debug
 
@@ -126,10 +126,14 @@
       :halign "center"
       :width 10
       :style "padding-right: 10px;" 
-    (label 
-      :class "battery ${ischarging}"
-      :text {battery == 100 ? "FULL" : "${battery}%"}
-      :style {battery == 100 ? "color: #ffff00;":""})))
+    (button
+      :class "battery-button ${battery == 100 ? 'full' : 'notfull'}"
+      :active {battery == 100 ?true : false}
+      :onclick "sh ~/.config/eww/scripts/easterEgg.sh"
+      (label 
+        :class "battery ${ischarging}"
+        :text {battery == 100 ? "FULL" : "${battery}%"}
+        ))))
 
 
 
@@ -153,7 +157,7 @@
   (box
     :space-evenly false
     :spacing 10
-    (caps-icon)(volume-wraper)(essensial-wraper)(wifi-menu-toggle)(bluetooth-wraper)(network_battery)))
+    (caps-icon)(volume-wraper)(essensial-wraper)(wifi-menu-toggle)(bluetooth-wraper)(defend-holder)(network_battery)))
 
 (defwidget clock []
   (box :class "clock-widget"
@@ -404,3 +408,17 @@
 
 
 
+;----------- defender-wraper
+(defvar defend-icon "/home/phuong5569/.config/eww/resources/defend.png")
+
+
+(defwidget defend-holder []
+  (eventbox
+    :onhover "eww update defend-icon='/home/phuong5569/.config/eww/resources/defend-active.png'"
+    :onhoverlost "eww update defend-icon='/home/phuong5569/.config/eww/resources/defend.png'"
+    ; :onclick "blueman-manager &"
+    (box
+      :orientation "horizontal"
+      :class "defend-wraper"
+    (image
+      :path defend-icon ))))

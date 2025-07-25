@@ -16,7 +16,7 @@ $star: #ffff00;
     border: 2px solid $whitetxt;
     background-color: $background;
     // padding-topk: 10px;
-    // padding-bottom: 10px;
+    // padding-bottom: 10px;https://elkowar.github.io/eww/widgets.html
 }
 
 * {
@@ -154,8 +154,21 @@ button:disabled {
   color: $disabled;
 }
 
+// battery 
+
 .battery.Charging {
   color:$ralsei
+}
+.battery.Not {
+  color: $kris;
+}
+
+.battery-button.full  {
+  color: $heart;
+}
+.battery-button {
+  background: $background;
+  color: $whitetxt;
 }
 
 
@@ -170,6 +183,8 @@ button:disabled {
   border-radius: 0;
 
 }
+
+
 
 .wifi-button:hover* {
   background-color: $star;
@@ -216,3 +231,4 @@ button:disabled {
   min-width: 20px;
   background-color: #f18f44;
 }
+

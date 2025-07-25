@@ -1,5 +1,3 @@
-#!/bin/bash
-
 dir="$HOME/.config/eww/resources/star_animation"
 files=($(ls "$dir" | sort))
 
