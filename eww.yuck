@@ -153,7 +153,7 @@
   (box
     :space-evenly false
     :spacing 10
-    (volume-wraper)(essensial-wraper)(bluetooth-wraper)(network_battery)))
+    (caps-icon)(volume-wraper)(essensial-wraper)(wifi-menu-toggle)(bluetooth-wraper)(network_battery)))
 
 (defwidget clock []
   (box :class "clock-widget"
@@ -197,7 +197,7 @@
   (box  :class "network_battery"
         :space-evenly false
         :spacing 15
-      (wifi-menu-toggle)(eth_status)(battery)))
+      (eth_status)(battery)))
 
 
 
@@ -388,6 +388,18 @@
       :class "bluetooth-wraper"
     (image
       :path bluetooth-icon))))
+
+;------- camera
+
+
+
+;------- Caps highlight
+(deflisten caps-icon "sh ~/.config/eww/scripts/capslock/caps-animation.sh")
+(defpoll iscaplock :interval "1s" "sh ~/.config/eww/scripts/capslock/check-caps.sh")
+(defwidget caps-icon []
+(image 
+  :visible iscaplock
+  :path caps-icon))
 
 
 

@@ -1,0 +1,1 @@
+hyprctl devices | grep -i "capslock" | tail -n1 | grep -q "yes" && echo true || echo false

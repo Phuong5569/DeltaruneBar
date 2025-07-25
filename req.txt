@@ -1,0 +1,5 @@
+kbd
+zenity
+nmcli
+awk
+grep
