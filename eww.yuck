@@ -128,7 +128,7 @@
       :style "padding-right: 10px;" 
     (label 
       :class "battery ${ischarging}"
-      :text {battery == 100 ? "FULL" : battery}
+      :text {battery == 100 ? "FULL" : "${battery}%"}
       :style {battery == 100 ? "color: #ffff00;":""})))
 
 

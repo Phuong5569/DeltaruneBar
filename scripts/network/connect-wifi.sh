@@ -1,4 +1,4 @@
-#!/bin/bash
+https://elkowar.github.io/eww/widgets.html#!/bin/bash
 
 SSID="$1"
 SECURITY="$2"
