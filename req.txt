@@ -3,3 +3,4 @@ zenity
 nmcli
 awk
 grep
+pactl

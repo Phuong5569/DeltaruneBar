@@ -86,7 +86,7 @@
 
 (defwindow volume-bar
   :monitor 0
-  :geometry (geometry :x "10%" :y "0%" :anchor "top right")
+  :geometry (geometry :x "14%" :y "0%" :anchor "top right")
   :stacking "fg"
   :exclusive false
   :windowtype "normal"
@@ -299,7 +299,7 @@
   (revealer
     :transition "slidedown"
     :reveal essensial-revealed
-    :duration "100ms"
+    :duration "200ms"
   (box :class "essensial"
        :space-evenly false
        :spacing 20
@@ -330,21 +330,14 @@
 
 (defwindow wifi-bar
   :monitor 0
-  :geometry (geometry :x "0" :y "0" :anchor "top right"  )
+  :geometry (geometry :x "5%" :anchor "top right"  )
   :stacking "fg"
-  :layer "top"
-  :exclusive false
-  :windowtype "normal"
-  :wm-ignore false
-  
-  (box :class "wifi-wraper"
-       :visible wifi-revealed
+  (box :class "wifi-wraper" :visible wifi-revealed
     (revealer
-      :reveal winrev
-      :style "padding: 5px; background: transparent;"
+      ; :style "margin: 5px; background: transparent;"
       :reveal wifi-revealed
-      :transition "slidedown"
-      :duration "100ms"
+      :transition "slideup"
+      :duration "400ms"
       (box :class "wifi-window" :orientation "vertical" :space-evenly false
         (wifi-list)
         (box :orientation "horizontal" :space-evenly true 
