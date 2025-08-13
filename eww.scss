@@ -202,10 +202,10 @@ button:disabled {
   background-color: $disabled;
 }
 .wifi-window {
+  border: 2px solid $whitetxt;
   background: $background;
 }
 .wifi-wraper{
-  border: 2px solid $whitetxt;
   background: $background;
 }
 .wifi-refresh {

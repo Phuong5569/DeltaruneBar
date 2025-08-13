@@ -332,12 +332,12 @@
   :monitor 0
   :geometry (geometry :x "5%" :anchor "top right"  )
   :stacking "fg"
-  (box :class "wifi-wraper" :visible wifi-revealed
+  (box :class "wifi-wraper" 
     (revealer
-      ; :style "margin: 5px; background: transparent;"
+      :style "margin: 5px; background: transparent;"
       :reveal wifi-revealed
       :transition "slideup"
-      :duration "400ms"
+      :duration "200ms"
       (box :class "wifi-window" :orientation "vertical" :space-evenly false
         (wifi-list)
         (box :orientation "horizontal" :space-evenly true 
