@@ -1,0 +1,52 @@
+
+; (defvar wifi-networks "[{\"ssid\":\"Network_1\",\"signal\":89,\"security\":\"WPA2\",\"connected\":false},{\"ssid\":\"Network_2\",\"signal\":75,\"security\":\"WPA2\",\"connected\":false},{\"ssid\":\"Network_3\",\"signal\":60,\"security\":\"WPA2\",\"connected\":false},{\"ssid\":\"Network_4\",\"signal\":94,\"security\":\"WPA2\",\"connected\":true},{\"ssid\":\"Network_5\",\"signal\":55,\"security\":\"WPA\",\"connected\":false},{\"ssid\":\"Network_6\",\"signal\":48,\"security\":\"WPA\",\"connected\":false},{\"ssid\":\"Network_7\",\"signal\":80,\"security\":\"WPA2\",\"connected\":false},{\"ssid\":\"Network_8\",\"signal\":70,\"security\":\"WPA2\",\"connected\":false},{\"ssid\":\"Network_9\",\"signal\":30,\"security\":\"WPA2\",\"connected\":false},{\"ssid\":\"Network_10\",\"signal\":45,\"security\":\"WEP\",\"connected\":false},{\"ssid\":\"Network_11\",\"signal\":91,\"security\":\"WPA2\",\"connected\":false},{\"ssid\":\"Network_12\",\"signal\":76,\"security\":\"WPA2\",\"connected\":false},{\"ssid\":\"Network_13\",\"signal\":33,\"security\":\"None\",\"connected\":false},{\"ssid\":\"Network_14\",\"signal\":66,\"security\":\"WPA2\",\"connected\":false},{\"ssid\":\"Network_15\",\"signal\":83,\"security\":\"WPA3\",\"connected\":false},{\"ssid\":\"Network_16\",\"signal\":25,\"security\":\"WPA\",\"connected\":false},{\"ssid\":\"Network_17\",\"signal\":58,\"security\":\"WPA2\",\"connected\":false},{\"ssid\":\"Network_18\",\"signal\":69,\"security\":\"WPA2\",\"connected\":false},{\"ssid\":\"Network_19\",\"signal\":88,\"security\":\"WPA2\",\"connected\":false},{\"ssid\":\"Network_20\",\"signal\":99,\"security\":\"WPA2\",\"connected\":false}]")
+; ;bacsically I need to push a fake data for the windows render the requirement space, then hit refesh for data updated, look dumb as fuck but hey its worked like a charm lol
+(defvar wifi-networks "")
+(defvar isRefresh "Refresh")
+
+(defvar wifi-revealed false)
+(defwidget wifi-menu-toggle []
+(eventbox
+    :class "item"
+    :onclick {wifi-revealed ?"eww update wifi-revealed=false" : "eww update wifi-revealed=true"}
+  (box
+  :orientation "horizontal"
+(image :path {wifi-revealed ?"/home/phuong5569/.config/eww/resources/item-active.png" : "/home/phuong5569/.config/eww/resources/item.png"}))))
+
+
+(defwindow wifi-bar
+  :monitor 0
+  :geometry (geometry :x "0%" :anchor "top right"  )
+  :stacking "fg"
+  (box :class "wifi-wraper" 
+    (revealer
+      :style "margin: 5px; background: transparent;"
+      :reveal wifi-revealed
+      :transition "slideup"
+      :duration "200ms"
+      (box :class "wifi-window" :orientation "vertical" :space-evenly false
+        (wifi-list)
+        (box :orientation "horizontal" :space-evenly true 
+          (button
+            :class "wifi-refresh"
+            :onclick "eww update isRefresh='scanning....' && ~/.config/eww/scripts/network/scan-wifi.sh && eww update isRefresh='Refresh' &"
+            isRefresh)
+          (button
+            :class "wifi-disconnect"
+            :onclick "nmcli device disconnect wlo1 && ~/.config/eww/scripts/network/scan-wifi.sh &"
+            "Disconnect"))))))
+
+
+
+(defwidget wifi-list []
+  (box :class "wifi-container" :orientation "v" :space-evenly false
+    (for network in wifi-networks
+      (button
+        :class "wifi-button"
+        :onclick "sh ~/.config/eww/scripts/network/connect-wifi.sh '${network.ssid}' '${network.security}' && ~/.config/eww/scripts/network/scan-wifi.sh && cat ~/.config/eww/scripts/network/list-wifi.json > /tmp/eww-wifi-update &"
+      (box :class "wifi-item ${network.connected ? 'connected' : ''}" :orientation "h" :space-evenly true :spacing 0
+        (label :class "wifi-ssid" :text "${network.ssid}")
+        (box :class "wifi-info" :orientation "h" :space-evenly true 
+          (label :class "wifi-signal" :text "${network.signal}%")
+          (label :class "wifi-security" :text { network.security != "None" ? "[*]" : "" } :halign "center")
+          (label :class "wifi-status" :text "${network.connected ? '♥' : ' '}" :justify "right" :style "color:red")))))))

@@ -1,0 +1,8 @@
+
+
+(deflisten spotify_scroller
+  "sh ~/.config/eww/scripts/media/scroll_spotify.sh")
+(defwidget spotify-widget []
+  (box :class "spotify-scroller"
+    (label :text spotify_scroller
+           :class "spotify-label")))

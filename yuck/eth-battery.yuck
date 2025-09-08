@@ -1,0 +1,41 @@
+
+;wifi, eth and battery 
+; (defvar eth false)
+; (defvar battery 100)
+
+; (defvar ischarging true) ;placeholder for debug
+
+(defpoll eth :interval "1s" "sh ~/.config/eww/scripts/network/ethernet_status.sh")
+(defpoll battery :interval "20s" "cat /sys/class/power_supply/BAT0/capacity")
+(defpoll ischarging :interval "2s" "cat /sys/class/power_supply/BAT0/status") 
+(defwidget eth_status []
+(box  :class "eth"
+      :orientation "horizontal"
+      :halign "center"
+    (button   :onclick "sh ~/.config/eww/scripts/network/copy-eth-ip.sh"
+              :class {eth ? "eth_connected" : "eth_disconnected"}
+              :active eth
+             {eth ? "ETH":"eth"})))
+
+
+
+(defwidget battery []
+(box  
+      :orientation "horizontal"
+      :halign "center"
+      :style "padding-right: 1px;" 
+    (button
+      :class "battery-button ${battery == 100 ? 'full' : 'notfull'}"
+      :active {battery == 100 ?true : false}
+      :onclick "sh ~/.config/eww/scripts/easterEgg.sh"
+      (label 
+        :class "battery ${ischarging}"
+        :text {battery == 100 ? "FULL" : "${battery}%"}
+        ))))
+
+
+(defwidget network_battery []
+  (box  :class "network_battery"
+        :space-evenly false
+        :spacing 2
+      (eth_status)(battery)))

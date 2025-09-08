@@ -16,7 +16,7 @@ button {
   font-family: 'SVN-Determination Sans';
 }
 .main-bar{
-    border: 2px solid $whitetxt;
+    border: 1px solid $whitetxt;
     background-color: $background;
     // padding-topk: 10px;
     // padding-bottom: 10px;https://elkowar.github.io/eww/widgets.html
@@ -126,7 +126,7 @@ button:disabled {
 
 
 .workspaces {
-  padding: 5px;
+  padding: 2px;
   background: rgba(0, 0, 0, 0.8);
 }
 
@@ -237,3 +237,9 @@ button:disabled {
   background-color: #f18f44;
 }
 
+
+// defend-wraper
+
+.defend-wraper {
+  padding-right: 10;
+}

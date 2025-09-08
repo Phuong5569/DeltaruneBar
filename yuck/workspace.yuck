@@ -1,0 +1,18 @@
+;; Variables for workspace state
+(defvar current-workspace 1)
+(defvar workspaces "[1,2,3,4,5,6,7,8]")
+
+;; Workspace widget - main component
+(defwidget workspaces []
+  (box :class "workspaces"
+       :space-evenly true
+       :spacing 0
+    (for workspace in workspaces
+      (workspace-button :id workspace))))
+
+(defwidget workspace-button [id]
+  (button 
+    :class "workspace ${id == current-workspace ? 'active' : 'inactive'}"
+    :onclick "hyprctl dispatch workspace ${id} && eww update current-workspace=${id}"
+    :tooltip "Workspace ${id}"
+    "${id}"))

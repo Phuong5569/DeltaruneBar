@@ -1,0 +1,105 @@
+; essensial - placeholder for debug
+; (defvar _cpu 90)
+; (defvar _gpu 50)
+; (defvar _ram 10)
+(defvar essensial-revealed false)
+(defvar essensial-icon "/home/phuong5569/.config/eww/resources/act.png")
+; -----------------
+
+(defpoll _cpu :interval "2s" "sh ~/.config/eww/scripts/essensial/cpu-usage.sh")
+(defpoll _gpu :interval "2s" "sh ~/.config/eww/scripts/essensial/gpu-usage-nvida.sh")
+(defpoll _ram :interval "2s" "sh ~/.config/eww/scripts/essensial/ram-usage.sh")
+(defwidget cpu []
+  (box  :class "cpu-widget"
+        :space-evenly false
+  (image :path "/home/phuong5569/.config/eww/resources/kris.png")
+  "KRIS"
+    (box  :space-evenly false
+          :orientation "vertical"
+  (label  :class "percentage"
+          :text "${_cpu}${_cpu < 10 ? '  ' : _cpu < 100 ? ' ' : ''}/  100"
+          :xalign "1")
+         (box 
+              :orientation "horizontal"
+              :space-evenly false
+            (label  :class "indicate"
+                    :text "cpu")    
+            (progress :value _cpu
+              :class "cpu-bar"
+              :valign "center"
+              )))))
+
+
+(defwidget gpu []
+  (box  :class "gpu-widget"
+        :space-evenly false
+  (image :path "/home/phuong5569/.config/eww/resources/susie.png")
+  "SUSIE"
+    (box  :space-evenly false
+          :orientation "vertical"
+  (label  :class "percentage"
+          :text "${_gpu}${_gpu < 10 ? '  ' : _gpu < 100 ? ' ' : ''}/  100"
+          :xalign "1")
+         (box 
+              :orientation "horizontal"
+              :space-evenly false
+            (label  :class "indicate"
+                    :text "gpu")    
+            (progress :value _gpu
+              :class "gpu-bar"
+              :valign "center"
+              )
+            ))))
+
+
+(defwidget ram []
+  
+  (box  :class "ram-widget"
+        :space-evenly false
+  (image :path "/home/phuong5569/.config/eww/resources/ralsei.png")
+  "RALSEI"
+    (box  :space-evenly false
+          :orientation "vertical"
+  (label  :class "percentage"
+          :text "${_ram}${_ram < 10 ? '  ' : _ram < 100 ? ' ' : ''}/  100"
+          :xalign "1")
+         (box 
+              :orientation "horizontal"
+              :space-evenly false
+            (label  :class "indicate"
+                    :text "ram")    
+            (progress :value _ram
+              :class "ram-bar"
+              :valign "center"
+              )
+            ))))
+
+(defwindow essensial-bar
+  :monitor 0
+  :geometry (geometry :x "0%" :y "0%" :anchor "top right")
+  :stacking "overlay"
+  :exclusive false  
+  :windowtype "normal"  
+  :wm-ignore false
+    (essensial))
+
+
+(defwidget essensial-wraper []
+  (eventbox
+    :onhover "eww update essensial-revealed=true && eww update essensial-icon='/home/phuong5569/.config/eww/resources/act_active.png'"
+    :onhoverlost "eww update essensial-revealed=false && eww update essensial-icon='/home/phuong5569/.config/eww/resources/act.png'"
+    (box
+      :orientation "horizontal"
+      :class "essensial-wraper"
+    (image
+      :path essensial-icon))))
+
+(defwidget essensial []
+  (revealer
+    :transition "slidedown"
+    :reveal essensial-revealed
+    :duration "200ms"
+  (box :class "essensial"
+       :space-evenly false
+       :spacing 20
+    (cpu)(gpu)(ram))))
